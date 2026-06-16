@@ -10,45 +10,40 @@
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;min-height:100vh;overflow-x:hidden;}
   body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(255,45,120,.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(0,245,212,.06) 0%,transparent 50%);pointer-events:none;z-index:0;}
-
-  /* HEADER */
-  header{position:sticky;top:0;z-index:100;background:rgba(13,13,26,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 16px;height:60px;display:flex;align-items:center;justify-content:space-between;}
-  .logo{font-size:16px;font-weight:900;}.logo span:first-child{color:var(--pink);}.logo span:last-child{color:var(--mint);}
-  .header-right{display:flex;align-items:center;gap:6px;}
-  .save-btn{background:rgba(0,245,212,.1);color:var(--mint);border:1px solid rgba(0,245,212,.3);padding:7px 10px;border-radius:6px;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
-  .load-btn{background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.3);padding:7px 10px;border-radius:6px;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
-  .add-btn{background:var(--pink);color:#fff;border:none;padding:7px 12px;border-radius:6px;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
+  header{position:sticky;top:0;z-index:100;background:rgba(13,13,26,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 12px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-size:15px;font-weight:900;flex-shrink:0;}.logo span:first-child{color:var(--pink);}.logo span:last-child{color:var(--mint);}
+  .header-right{display:flex;align-items:center;gap:5px;}
+  .hbtn{padding:7px 9px;border-radius:6px;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;}
+  .hbtn-load{background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.3);}
+  .hbtn-save{background:rgba(0,245,212,.1);color:var(--mint);border:1px solid rgba(0,245,212,.3);}
+  .hbtn-add{background:var(--pink);color:#fff;border:none;}
   .today-badge{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);border:1px solid var(--border);padding:3px 6px;border-radius:4px;}
-
-  /* REMINDER BANNER */
   .reminder-banner{display:none;position:sticky;top:60px;z-index:99;background:linear-gradient(90deg,rgba(255,45,120,.9),rgba(155,89,182,.9));padding:10px 16px;font-size:12px;font-weight:700;text-align:center;cursor:pointer;}
   .reminder-banner.show{display:block;}
-
-  /* VIEW TABS */
-  .view-tabs{display:flex;gap:0;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:3px;margin:16px 14px 0;}
-  .view-tab{flex:1;padding:7px;border:none;background:transparent;color:var(--muted);font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;cursor:pointer;border-radius:5px;transition:all .15s;}
+  .view-tabs{display:flex;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:3px;margin:14px 14px 0;}
+  .view-tab{flex:1;padding:8px;border:none;background:transparent;color:var(--muted);font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;cursor:pointer;border-radius:5px;transition:all .15s;}
   .view-tab.active{background:var(--pink);color:#fff;}
-
-  main{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:16px 14px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  .col-span-2{grid-column:span 2;}
+  main{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:14px;}
   .section-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
   .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
-
   /* STATS */
-  .stats-row{grid-column:span 2;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-  .stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;transition:transform .15s;}
-  .stat-card.clickable{cursor:pointer;}.stat-card.clickable:hover{transform:translateY(-2px);}
+  .stats-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+  .stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+  .stat-card.clickable{cursor:pointer;}
   .stat-card.editable{cursor:pointer;}
   .stat-num{font-family:'Share Tech Mono',monospace;font-size:26px;font-weight:700;line-height:1;margin-bottom:3px;}
   .stat-num.pink{color:var(--pink);}.stat-num.mint{color:var(--mint);}.stat-num.gold{color:var(--gold);}.stat-num.purple{color:#C77DFF;}
   .stat-label{font-size:10px;color:var(--muted);}
   .budget-input{font-family:'Share Tech Mono',monospace;font-size:20px;font-weight:700;color:#C77DFF;background:transparent;border:none;border-bottom:1px solid var(--border);outline:none;width:100%;text-align:center;-webkit-appearance:none;}
-
-  /* TICKET CARD */
-  .ticket-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;transition:box-shadow .2s;}
+  /* VIEWS */
+  #list-view{display:block;}
+  #cal-view{display:none;}
+  /* TICKETS */
+  .tickets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-bottom:14px;}
+  .ticket-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;}
   .ticket-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--pink),var(--purple));}
   .ticket-card.drag-over{border-color:var(--mint);box-shadow:0 0 12px rgba(0,245,212,.3);}
-  .ticket-card.dragging{opacity:.5;}
+  .ticket-card.dragging{opacity:.4;}
   .ticket-inner{padding:16px;}
   .card-top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
   .event-category{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.5px;padding:3px 8px;border-radius:3px;}
@@ -56,14 +51,12 @@
   .cat-anime{background:rgba(0,245,212,.15);color:var(--mint);border:1px solid rgba(0,245,212,.3);}
   .cat-game{background:rgba(255,215,0,.15);color:var(--gold);border:1px solid rgba(255,215,0,.3);}
   .card-btn-group{display:flex;gap:2px;align-items:center;}
-  .drag-handle{color:var(--muted);font-size:20px;cursor:grab;padding:4px 8px;touch-action:none;line-height:1;user-select:none;-webkit-user-select:none;}
-  .delete-btn{background:none;border:none;color:var(--muted);font-size:15px;cursor:pointer;padding:2px 5px;border-radius:4px;line-height:1;}
-  .delete-btn:hover{color:var(--pink);}
-  .edit-btn{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;padding:2px 5px;border-radius:4px;line-height:1;}
-  .edit-btn:hover{color:var(--mint);}
+  .drag-handle{color:var(--muted);font-size:22px;cursor:grab;padding:4px 8px;line-height:1;user-select:none;-webkit-user-select:none;touch-action:none;}
+  .ibtn{background:none;border:none;cursor:pointer;padding:3px 6px;border-radius:4px;line-height:1;font-size:14px;color:var(--muted);}
+  .ibtn:hover{background:rgba(255,255,255,.08);}
   .event-title{font-size:16px;font-weight:900;line-height:1.3;margin-bottom:4px;}
   .event-artist{font-size:11px;color:var(--muted);margin-bottom:10px;}
-  .ticket-link-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:5px 11px;border-radius:5px;border:1px solid;cursor:pointer;text-decoration:none;transition:background .15s;margin-bottom:10px;}
+  .ticket-link-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:5px 11px;border-radius:5px;border:1px solid;cursor:pointer;text-decoration:none;margin-bottom:10px;}
   .tl-eplus{color:#00B4D8;border-color:rgba(0,180,216,.4);background:rgba(0,180,216,.08);}
   .tl-lawson{color:#F39800;border-color:rgba(243,152,0,.4);background:rgba(243,152,0,.08);}
   .tl-tpia{color:#C77DFF;border-color:rgba(199,125,255,.4);background:rgba(199,125,255,.08);}
@@ -84,45 +77,38 @@
   .countdown-pill.safe{background:rgba(0,245,212,.1);color:var(--mint);border:1px solid rgba(0,245,212,.2);}
   .pulse-dot{width:7px;height:7px;border-radius:50%;background:currentColor;animation:pulse 1.5s ease-in-out infinite;}
   @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-
-  /* CARD SECTIONS */
   .card-section{margin-top:14px;border-top:1px solid var(--border);padding-top:12px;}
   .card-section-label{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--muted);margin-bottom:8px;}
   .card-route-inputs{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:center;margin-bottom:8px;}
-  .card-route-input{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:5px;padding:6px 8px;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:11px;outline:none;width:100%;}
-  .card-route-input:focus{border-color:var(--gold);}
-  .card-route-input::placeholder{color:var(--muted);}
+  .card-inp{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:5px;padding:6px 8px;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:11px;outline:none;width:100%;}
+  .card-inp:focus{border-color:var(--gold);}
+  .card-inp::placeholder{color:var(--muted);}
   .card-route-arrow{color:var(--muted);font-size:14px;text-align:center;}
   .card-route-btn{width:100%;background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.35);color:var(--gold);padding:7px;border-radius:5px;font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;cursor:pointer;margin-bottom:6px;}
-
-  /* TIMETABLE */
   .card-tl-list{display:flex;flex-direction:column;}
   .card-tl-item{display:grid;grid-template-columns:46px 1fr auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);}
   .card-tl-item:last-child{border-bottom:none;}
   .card-tl-time{font-family:'Share Tech Mono',monospace;font-size:11px;font-weight:700;color:var(--mint);}
   .card-tl-name{font-size:12px;font-weight:700;}
   .card-tl-detail{font-size:10px;color:var(--muted);}
-  .card-tl-delete{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;padding:2px 4px;border-radius:3px;flex-shrink:0;}
-  .card-tl-delete:hover{color:var(--pink);}
-  .card-tl-add{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
-  .card-tl-input{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:5px;padding:5px 7px;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:11px;outline:none;flex:1;min-width:60px;}
-  .card-tl-input:focus{border-color:var(--mint);}
-  .card-tl-input::placeholder{color:var(--muted);}
-  .card-tl-input.time-inp{width:68px;flex:none;}
+  .card-tl-del{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;padding:2px 4px;}
+  .card-tl-del:hover{color:var(--pink);}
+  .card-tl-add{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap;}
+  .card-tl-inp{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:5px;padding:5px 7px;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:11px;outline:none;flex:1;min-width:50px;}
+  .card-tl-inp.time-inp{width:65px;flex:none;}
+  .card-tl-inp:focus{border-color:var(--mint);}
+  .card-tl-inp::placeholder{color:var(--muted);}
   .card-tl-addbtn{background:rgba(0,245,212,.1);border:1px solid rgba(0,245,212,.3);color:var(--mint);padding:5px 10px;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;}
-
-  /* SETLIST */
-  .setlist-textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:8px;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:11px;outline:none;resize:vertical;min-height:80px;margin-top:6px;}
-  .setlist-textarea:focus{border-color:var(--mint);}
-  .setlist-textarea::placeholder{color:var(--muted);}
-  .setlist-save-btn{margin-top:6px;background:rgba(0,245,212,.1);border:1px solid rgba(0,245,212,.3);color:var(--mint);padding:5px 12px;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
-
+  .setlist-ta{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:8px;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:11px;outline:none;resize:vertical;min-height:80px;margin-top:6px;}
+  .setlist-ta:focus{border-color:var(--mint);}
+  .setlist-ta::placeholder{color:var(--muted);}
+  .setlist-save{margin-top:6px;background:rgba(0,245,212,.1);border:1px solid rgba(0,245,212,.3);color:var(--mint);padding:5px 12px;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
   /* UPCOMING */
   .upcoming-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;position:relative;overflow:hidden;}
   .upcoming-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--purple),var(--pink));}
   .upcoming-list{display:flex;flex-direction:column;gap:7px;}
   .upcoming-item{display:grid;grid-template-columns:42px 1fr auto auto;align-items:center;gap:8px;padding:9px 10px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color .15s;}
-  .upcoming-item:hover{border-color:var(--pink);}
+  .upcoming-item:hover{border-color:rgba(255,45,120,.4);}
   .upcoming-date-box{text-align:center;background:rgba(255,45,120,.1);border:1px solid rgba(255,45,120,.2);border-radius:5px;padding:3px;}
   .upcoming-date-box .month{font-size:8px;font-weight:700;color:var(--pink);letter-spacing:1px;display:block;}
   .upcoming-date-box .day{font-family:'Share Tech Mono',monospace;font-size:17px;font-weight:700;color:var(--text);line-height:1;display:block;}
@@ -134,29 +120,24 @@
   .upcoming-days-left .num{font-family:'Share Tech Mono',monospace;font-size:17px;font-weight:700;color:var(--pink);line-height:1;}
   .upcoming-days-left .label{font-size:9px;color:var(--muted);display:block;}
   .upcoming-days-left.safe .num{color:var(--mint);}.upcoming-days-left.warn .num{color:var(--gold);}
-  .upcoming-delete-btn{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;padding:4px 5px;border-radius:4px;}
-  .upcoming-delete-btn:hover{color:var(--pink);}
-
-  /* CALENDAR VIEW */
-  .cal-view{display:none;}
-  .cal-view.active{display:block;}
-  .list-view{display:contents;}
+  .upcoming-del{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;padding:4px 5px;border-radius:4px;}
+  .upcoming-del:hover{color:var(--pink);}
+  /* CALENDAR */
   .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-  .cal-nav{background:none;border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:14px;}
+  .cal-nav{background:none;border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:16px;}
   .cal-month-label{font-size:15px;font-weight:900;}
-  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
   .cal-dow{font-size:10px;font-weight:700;color:var(--muted);text-align:center;padding:4px 0;}
-  .cal-day{min-height:48px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:6px;padding:4px;font-size:10px;position:relative;cursor:default;}
+  .cal-day{min-height:50px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:5px;padding:4px;font-size:9px;overflow:hidden;}
   .cal-day.other-month{opacity:.3;}
   .cal-day.today{border-color:var(--mint);}
   .cal-day-num{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:2px;}
   .cal-day.today .cal-day-num{color:var(--mint);font-weight:700;}
-  .cal-event-dot{font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:1px 3px;border-radius:2px;margin-bottom:1px;cursor:pointer;}
-  .cal-event-dot.live{background:rgba(255,45,120,.25);color:var(--pink);}
-  .cal-event-dot.anime{background:rgba(0,245,212,.15);color:var(--mint);}
-  .cal-event-dot.game{background:rgba(255,215,0,.15);color:var(--gold);}
-  .cal-event-dot.ticket{background:rgba(255,215,0,.1);color:var(--gold);}
-
+  .cal-dot{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:1px 3px;border-radius:2px;margin-bottom:1px;cursor:pointer;font-size:9px;}
+  .cal-dot.live{background:rgba(255,45,120,.25);color:var(--pink);}
+  .cal-dot.anime{background:rgba(0,245,212,.15);color:var(--mint);}
+  .cal-dot.game{background:rgba(255,215,0,.15);color:var(--gold);}
+  .cal-dot.ticket{background:rgba(255,215,0,.1);color:var(--gold);}
   /* MODAL */
   .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;padding:16px;}
   .modal-overlay.open{display:flex;}
@@ -167,7 +148,7 @@
   .modal-body{padding:16px 18px;display:flex;flex-direction:column;gap:12px;}
   .form-row{display:flex;flex-direction:column;gap:5px;}
   .form-row label{font-size:11px;font-weight:700;color:var(--muted);}
-  .form-input{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:8px 11px;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:13px;outline:none;width:100%;transition:border-color .2s;}
+  .form-input{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:8px 11px;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:13px;outline:none;width:100%;}
   .form-input:focus{border-color:var(--pink);}
   .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
   .cat-select{display:flex;gap:6px;}
@@ -181,83 +162,68 @@
   .modal-footer{padding:14px 18px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;}
   .btn-cancel{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 16px;border-radius:6px;font-family:'Noto Sans JP',sans-serif;font-size:13px;cursor:pointer;}
   .btn-save{background:var(--pink);border:none;color:#fff;padding:8px 18px;border-radius:6px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
-
-  /* CONFIRM */
   .confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(2px);z-index:250;display:none;align-items:center;justify-content:center;}
   .confirm-overlay.open{display:flex;}
-  .confirm-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;max-width:320px;width:100%;margin:20px;text-align:center;}
+  .confirm-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;max-width:300px;width:100%;margin:20px;text-align:center;}
   .confirm-icon{font-size:30px;margin-bottom:10px;}
   .confirm-title{font-size:14px;font-weight:900;margin-bottom:5px;}
   .confirm-sub{font-size:11px;color:var(--muted);margin-bottom:18px;}
   .confirm-btns{display:flex;gap:8px;justify-content:center;}
   .confirm-cancel{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 18px;border-radius:6px;font-family:'Noto Sans JP',sans-serif;font-size:13px;cursor:pointer;}
   .confirm-ok{background:var(--pink);border:none;color:#fff;padding:8px 18px;border-radius:6px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
-
-  /* TOAST */
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid var(--border);color:var(--text);padding:11px 18px;border-radius:8px;font-size:13px;font-weight:700;z-index:300;transition:transform .3s,opacity .3s;opacity:0;box-shadow:0 4px 20px rgba(0,0,0,.4);}
   .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
   .toast.success{border-color:rgba(0,245,212,.4);color:var(--mint);}
   .toast.error{border-color:rgba(255,45,120,.4);color:var(--pink);}
-
   ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
-  @media(max-width:600px){main{grid-template-columns:1fr;gap:12px;padding:12px;}.col-span-2{grid-column:span 1;}.stats-row{grid-column:span 1;grid-template-columns:1fr 1fr;}.form-row-2{grid-template-columns:1fr;}.today-badge{display:none;}}
+  @media(max-width:600px){.form-row-2{grid-template-columns:1fr;}.today-badge{display:none;}}
 </style>
 </head>
 <body>
-
 <header>
   <div class="logo"><span>イベント情報</span><span>Dashboard</span></div>
   <div class="header-right">
     <div class="today-badge" id="today-badge"></div>
-    <button class="load-btn" onclick="document.getElementById('json-input').click()">📂 読込</button>
-    <input type="file" id="json-input" accept=".json" style="display:none" onchange="loadFromFile(event)">
-    <button class="save-btn" onclick="saveToFile()">💾 保存</button>
-    <button class="add-btn" onclick="openModal()">＋ 追加</button>
+    <button class="hbtn hbtn-load" onclick="document.getElementById('json-file').click()">📂 読込</button>
+    <input type="file" id="json-file" accept=".json" style="display:none" onchange="loadFromFile(event)">
+    <button class="hbtn hbtn-save" onclick="saveToFile()">💾 保存</button>
+    <button class="hbtn hbtn-add" onclick="openModal()">＋ 追加</button>
   </div>
 </header>
 
 <div class="reminder-banner" id="reminder-banner" onclick="dismissReminder()"></div>
 
 <div class="view-tabs">
-  <button class="view-tab active" onclick="switchView('list',this)">📋 リスト</button>
-  <button class="view-tab" onclick="switchView('calendar',this)">📅 カレンダー</button>
+  <button class="view-tab active" id="tab-list" onclick="switchView('list')">📋 リスト</button>
+  <button class="view-tab" id="tab-cal" onclick="switchView('cal')">📅 カレンダー</button>
 </div>
 
 <main>
-  <!-- STATS -->
   <div class="stats-row">
-    <div class="stat-card clickable" onclick="scrollToSection('tickets-area')" title="クリックでイベント情報へ">
-      <div class="stat-num pink" id="stat-events">0</div><div class="stat-label">登録イベント 👆</div>
-    </div>
+    <div class="stat-card clickable" onclick="scrollToTickets()"><div class="stat-num pink" id="stat-events">0</div><div class="stat-label">登録イベント 👆</div></div>
     <div class="stat-card"><div class="stat-num gold" id="stat-tickets">0</div><div class="stat-label">チケット待ち</div></div>
-    <div class="stat-card clickable" id="nearest-card" onclick="scrollToNearest()" title="クリックで該当イベントへ">
-      <div class="stat-num mint" id="stat-nearest">—</div><div class="stat-label">次のイベントまで（日）👆</div>
-    </div>
-    <div class="stat-card editable" id="budget-card" onclick="editBudget()">
-      <div class="stat-num purple" id="stat-budget">¥8,800</div><div class="stat-label">今月の推し活予算 ✏️</div>
-    </div>
+    <div class="stat-card clickable" onclick="scrollToNearest()"><div class="stat-num mint" id="stat-nearest">—</div><div class="stat-label">次のイベントまで（日）👆</div></div>
+    <div class="stat-card editable" id="budget-card" onclick="editBudget()"><div class="stat-num purple" id="stat-budget">¥8,800</div><div class="stat-label">今月の推し活予算 ✏️</div></div>
   </div>
 
   <!-- LIST VIEW -->
-  <div class="col-span-2 list-view-wrap" id="list-view-wrap">
+  <div id="list-view">
     <div id="tickets-area">
       <div class="section-label">チケット・イベント情報</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;" id="tickets-list">
+      <div class="tickets-grid" id="tickets-list">
         <div id="tickets-empty" style="color:var(--muted);font-size:13px;padding:20px;text-align:center;border:1px dashed var(--border);border-radius:10px;">＋ 追加ボタンからイベントを登録しよう</div>
       </div>
     </div>
-    <div style="margin-top:16px;">
-      <div class="upcoming-card">
-        <div class="section-label">スケジュール一覧</div>
-        <div class="upcoming-list" id="upcoming-list">
-          <div id="upcoming-empty" style="color:var(--muted);font-size:13px;padding:14px;text-align:center;">イベントを追加するとここに表示されます</div>
-        </div>
+    <div class="upcoming-card">
+      <div class="section-label">スケジュール一覧</div>
+      <div class="upcoming-list" id="upcoming-list">
+        <div id="upcoming-empty" style="color:var(--muted);font-size:13px;padding:14px;text-align:center;">イベントを追加するとここに表示されます</div>
       </div>
     </div>
   </div>
 
   <!-- CALENDAR VIEW -->
-  <div class="col-span-2 cal-view" id="cal-view-wrap">
+  <div id="cal-view">
     <div class="cal-header">
       <button class="cal-nav" onclick="calPrev()">‹</button>
       <div class="cal-month-label" id="cal-month-label"></div>
@@ -268,33 +234,33 @@
 </main>
 
 <!-- Add Modal -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModalOnBg(event)">
+<div class="modal-overlay" id="modal-add" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">イベントを追加</div><button class="modal-close" onclick="closeModal()">×</button></div>
     <div class="modal-body">
-      <div class="form-row"><label>カテゴリ</label><div class="cat-select"><button class="cat-btn active-live" onclick="setCategory('live',this)">LIVE</button><button class="cat-btn" onclick="setCategory('anime',this)">ANISONG</button><button class="cat-btn" onclick="setCategory('game',this)">GAME</button></div></div>
-      <div class="form-row"><label>イベント名 *</label><input class="form-input" type="text" id="new-title" placeholder="例：unSea定期ライブ"></div>
-      <div class="form-row"><label>アーティスト / 作品名</label><input class="form-input" type="text" id="new-artist" placeholder="例：unSea"></div>
-      <div class="form-row"><label>会場</label><input class="form-input" type="text" id="new-venue" placeholder="例：青山Rizm"></div>
+      <div class="form-row"><label>カテゴリ</label><div class="cat-select"><button class="cat-btn active-live" id="add-cat-live" onclick="setCat('live',this,'add')">LIVE</button><button class="cat-btn" id="add-cat-anime" onclick="setCat('anime',this,'add')">ANISONG</button><button class="cat-btn" id="add-cat-game" onclick="setCat('game',this,'add')">GAME</button></div></div>
+      <div class="form-row"><label>イベント名 *</label><input class="form-input" type="text" id="add-title" placeholder="例：unSea定期ライブ"></div>
+      <div class="form-row"><label>アーティスト / 作品名</label><input class="form-input" type="text" id="add-artist" placeholder="例：unSea"></div>
+      <div class="form-row"><label>会場</label><input class="form-input" type="text" id="add-venue" placeholder="例：青山Rizm"></div>
       <div class="form-row-2">
-        <div class="form-row"><label>チケット発売日時</label><input class="form-input" type="datetime-local" id="new-ticket-date"></div>
-        <div class="form-row"><label>イベント日時</label><input class="form-input" type="datetime-local" id="new-event-date"></div>
+        <div class="form-row"><label>チケット発売日時</label><input class="form-input" type="datetime-local" id="add-ticket-date"></div>
+        <div class="form-row"><label>イベント日時</label><input class="form-input" type="datetime-local" id="add-event-date"></div>
       </div>
-      <div class="form-row"><label>チケット購入サイト</label><div class="site-grid"><button class="site-btn" onclick="setSite('eplus',this)">e+</button><button class="site-btn" onclick="setSite('lawson',this)">ローチケ</button><button class="site-btn" onclick="setSite('tpia',this)">チケぴ</button><button class="site-btn" onclick="setSite('tiget',this)">Tiget</button><button class="site-btn" onclick="setSite('ticketdive',this)">TicketDive</button><button class="site-btn" onclick="setSite('livepocket',this)">LivePocket</button></div></div>
-      <div class="form-row" id="custom-url-row" style="display:none;"><label>チケットURL</label><input class="form-input" type="url" id="new-ticket-url" placeholder="https://..."></div>
-      <div class="form-row"><label>座席 / メモ</label><input class="form-input" type="text" id="new-memo" placeholder="例：3番"></div>
-      <div class="form-row"><label>🚃 出発地（ルート検索）</label><input class="form-input" type="text" id="new-departure" placeholder="例：渋谷"></div>
+      <div class="form-row"><label>チケット購入サイト</label><div class="site-grid" id="add-site-grid"><button class="site-btn" onclick="setSite('eplus',this,'add')">e+</button><button class="site-btn" onclick="setSite('lawson',this,'add')">ローチケ</button><button class="site-btn" onclick="setSite('tpia',this,'add')">チケぴ</button><button class="site-btn" onclick="setSite('tiget',this,'add')">Tiget</button><button class="site-btn" onclick="setSite('ticketdive',this,'add')">TicketDive</button><button class="site-btn" onclick="setSite('livepocket',this,'add')">LivePocket</button></div></div>
+      <div class="form-row" id="add-url-row" style="display:none"><label>チケットURL</label><input class="form-input" type="url" id="add-ticket-url" placeholder="https://..."></div>
+      <div class="form-row"><label>座席 / メモ</label><input class="form-input" type="text" id="add-memo" placeholder="例：3番"></div>
+      <div class="form-row"><label>🚃 出発地（ルート検索）</label><input class="form-input" type="text" id="add-departure" placeholder="例：渋谷"></div>
     </div>
     <div class="modal-footer"><button class="btn-cancel" onclick="closeModal()">キャンセル</button><button class="btn-save" onclick="saveEvent()">保存する</button></div>
   </div>
 </div>
 
 <!-- Edit Modal -->
-<div class="modal-overlay" id="edit-modal-overlay" onclick="closeEditModalOnBg(event)">
+<div class="modal-overlay" id="modal-edit" onclick="if(event.target===this)closeEditModal()">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">イベントを編集</div><button class="modal-close" onclick="closeEditModal()">×</button></div>
     <div class="modal-body">
-      <div class="form-row"><label>カテゴリ</label><div class="cat-select"><button class="cat-btn active-live" id="edit-cat-live" onclick="setEditCategory('live',this)">LIVE</button><button class="cat-btn" id="edit-cat-anime" onclick="setEditCategory('anime',this)">ANISONG</button><button class="cat-btn" id="edit-cat-game" onclick="setEditCategory('game',this)">GAME</button></div></div>
+      <div class="form-row"><label>カテゴリ</label><div class="cat-select"><button class="cat-btn active-live" id="edit-cat-live" onclick="setCat('live',this,'edit')">LIVE</button><button class="cat-btn" id="edit-cat-anime" onclick="setCat('anime',this,'edit')">ANISONG</button><button class="cat-btn" id="edit-cat-game" onclick="setCat('game',this,'edit')">GAME</button></div></div>
       <div class="form-row"><label>イベント名 *</label><input class="form-input" type="text" id="edit-title"></div>
       <div class="form-row"><label>アーティスト / 作品名</label><input class="form-input" type="text" id="edit-artist"></div>
       <div class="form-row"><label>会場</label><input class="form-input" type="text" id="edit-venue"></div>
@@ -302,8 +268,8 @@
         <div class="form-row"><label>チケット発売日時</label><input class="form-input" type="datetime-local" id="edit-ticket-date"></div>
         <div class="form-row"><label>イベント日時</label><input class="form-input" type="datetime-local" id="edit-event-date"></div>
       </div>
-      <div class="form-row"><label>チケット購入サイト</label><div class="site-grid" id="edit-site-grid"><button class="site-btn" onclick="setEditSite('eplus',this)">e+</button><button class="site-btn" onclick="setEditSite('lawson',this)">ローチケ</button><button class="site-btn" onclick="setEditSite('tpia',this)">チケぴ</button><button class="site-btn" onclick="setEditSite('tiget',this)">Tiget</button><button class="site-btn" onclick="setEditSite('ticketdive',this)">TicketDive</button><button class="site-btn" onclick="setEditSite('livepocket',this)">LivePocket</button></div></div>
-      <div class="form-row" id="edit-custom-url-row" style="display:none;"><label>チケットURL</label><input class="form-input" type="url" id="edit-ticket-url"></div>
+      <div class="form-row"><label>チケット購入サイト</label><div class="site-grid" id="edit-site-grid"><button class="site-btn" onclick="setSite('eplus',this,'edit')">e+</button><button class="site-btn" onclick="setSite('lawson',this,'edit')">ローチケ</button><button class="site-btn" onclick="setSite('tpia',this,'edit')">チケぴ</button><button class="site-btn" onclick="setSite('tiget',this,'edit')">Tiget</button><button class="site-btn" onclick="setSite('ticketdive',this,'edit')">TicketDive</button><button class="site-btn" onclick="setSite('livepocket',this,'edit')">LivePocket</button></div></div>
+      <div class="form-row" id="edit-url-row" style="display:none"><label>チケットURL</label><input class="form-input" type="url" id="edit-ticket-url"></div>
       <div class="form-row"><label>座席 / メモ</label><input class="form-input" type="text" id="edit-memo"></div>
       <div class="form-row"><label>🚃 出発地（ルート検索）</label><input class="form-input" type="text" id="edit-departure"></div>
     </div>
@@ -316,7 +282,7 @@
   <div class="confirm-box">
     <div class="confirm-icon">🗑️</div>
     <div class="confirm-title">このイベントを削除しますか？</div>
-    <div class="confirm-sub" id="confirm-target-name"></div>
+    <div class="confirm-sub" id="confirm-sub"></div>
     <div class="confirm-btns"><button class="confirm-cancel" onclick="closeConfirm()">キャンセル</button><button class="confirm-ok" onclick="execDelete()">削除する</button></div>
   </div>
 </div>
@@ -327,11 +293,15 @@
 const nowDate=new Date();
 document.getElementById('today-badge').textContent=nowDate.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric',weekday:'short'});
 
-let events=[],currentCategory='live',currentSite=null,deleteTargetId=null;
-let calYear=nowDate.getFullYear(),calMonth=nowDate.getMonth();
-let dragSrcId=null;
+let events=[];
+let addCat='live', addSite=null;
+let editCat='live', editSite=null, editId=null;
+let deleteId=null;
+let dragSrcId=null, touchDragId=null;
+let calYear=nowDate.getFullYear(), calMonth=nowDate.getMonth();
+let currentView='list';
 
-const SITE_CONFIG={
+const SITES={
   eplus:{label:'e+',cls:'tl-eplus',url:'https://eplus.jp'},
   lawson:{label:'ローチケ',cls:'tl-lawson',url:'https://l-tike.com'},
   tpia:{label:'チケぴ',cls:'tl-tpia',url:'https://ticket.pia.jp'},
@@ -339,25 +309,42 @@ const SITE_CONFIG={
   ticketdive:{label:'TicketDive',cls:'tl-ticketdive',url:'https://ticketdive.com'},
   livepocket:{label:'LivePocket',cls:'tl-livepocket',url:'https://t.livepocket.jp'},
 };
-const CAT_LABELS={live:'LIVE',anime:'ANISONG',game:'GAME'};
-const CAT_CLS={live:'cat-live',anime:'cat-anime',game:'cat-game'};
-const MONTHS=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-const JPMONTHS=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+const CAT={live:'LIVE',anime:'ANISONG',game:'GAME'};
+const CATCLS={live:'cat-live',anime:'cat-anime',game:'cat-game'};
+const MON=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+const JPMON=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
 
-// STORAGE
-function persist(){try{localStorage.setItem('ev_events',JSON.stringify(events));}catch(e){}}
-function loadFromStorage(){try{const r=localStorage.getItem('ev_events');if(r){events=JSON.parse(r);renderAll();}}catch(e){}}
+// --- STORAGE ---
+function persist(){try{localStorage.setItem('ev2_events',JSON.stringify(events));}catch(e){}}
+
+function loadFromStorage(){
+  // Try new key first, then old keys
+  const keys=['ev2_events','ev_events','wota_events'];
+  for(const k of keys){
+    try{
+      const r=localStorage.getItem(k);
+      if(r){
+        const parsed=JSON.parse(r);
+        const arr=Array.isArray(parsed)?parsed:(parsed.events||null);
+        if(arr&&arr.length>0){events=arr;if(k!=='ev2_events')persist();return;}
+      }
+    }catch(e){}
+  }
+}
+
 function loadFromFile(e){
-  const file=e.target.files[0];if(!file)return;
+  const file=e.target.files[0];
+  if(!file)return;
   const reader=new FileReader();
   reader.onload=ev=>{
     try{
-      const data=JSON.parse(ev.target.result);
-      const loaded=data.events||data;
-      if(!Array.isArray(loaded))throw new Error();
-      events=loaded;
-      persist();renderAll();
-      showToast(`✅ ${loaded.length}件のイベントを読み込みました！`,'success');
+      const raw=JSON.parse(ev.target.result);
+      const arr=Array.isArray(raw)?raw:(raw.events||null);
+      if(!arr||!Array.isArray(arr))throw new Error('invalid');
+      events=arr;
+      persist();
+      renderAll();
+      showToast('✅ '+arr.length+'件読み込みました！','success');
     }catch(err){
       showToast('⚠️ 読み込みに失敗しました','error');
     }
@@ -365,127 +352,124 @@ function loadFromFile(e){
   };
   reader.readAsText(file);
 }
+
+function saveToFile(){
+  const d=nowDate;
+  const name=`ev_${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}.json`;
   const blob=new Blob([JSON.stringify({savedAt:new Date().toISOString(),events},null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob),a=document.createElement('a');
-  const d=nowDate;
-  a.href=url;a.download=`ev_dashboard_${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}.json`;
-  a.click();URL.revokeObjectURL(url);showToast('💾 保存しました！','success');
+  a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);
+  showToast('💾 保存しました！','success');
 }
 
-function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function formatDT(dt){if(!dt)return'未設定';const d=new Date(dt);return`${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getDate().toString().padStart(2,'0')} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;}
+// --- HELPERS ---
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function fmtDT(dt){if(!dt)return'未設定';const d=new Date(dt);return`${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getDate().toString().padStart(2,'0')} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;}
 function daysUntil(s){if(!s)return null;return Math.ceil((new Date(s)-nowDate)/86400000);}
+function sortByDate(){events.sort((a,b)=>{const da=a.eventDate?new Date(a.eventDate):new Date('9999');const db=b.eventDate?new Date(b.eventDate):new Date('9999');return da-db;});}
 
-// SORT BY EVENT DATE
-function sortEvents(){
-  events.sort((a,b)=>{
-    const da=a.eventDate?new Date(a.eventDate):new Date('9999-12-31');
-    const db=b.eventDate?new Date(b.eventDate):new Date('9999-12-31');
-    return da-db;
-  });
+// --- VIEW SWITCH ---
+function switchView(v){
+  currentView=v;
+  document.getElementById('list-view').style.display=v==='list'?'block':'none';
+  document.getElementById('cal-view').style.display=v==='cal'?'block':'none';
+  document.getElementById('tab-list').classList.toggle('active',v==='list');
+  document.getElementById('tab-cal').classList.toggle('active',v==='cal');
+  if(v==='cal')renderCalendar();
 }
 
-function renderAll(){renderTickets();renderUpcoming();updateStats();renderCalendar();checkReminders();}
-
-// SCROLL HELPERS
-function scrollToSection(id){
-  const el=document.getElementById(id);
-  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+// --- SCROLL ---
+function scrollToTickets(){
+  switchView('list');
+  setTimeout(()=>{const el=document.getElementById('tickets-area');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},50);
 }
 function scrollToNearest(){
+  switchView('list');
   const future=events.filter(ev=>ev.eventDate&&daysUntil(ev.eventDate)>=0).sort((a,b)=>daysUntil(a.eventDate)-daysUntil(b.eventDate));
-  if(future.length===0)return;
-  const id=future[0].id;
-  const el=document.querySelector(`[data-id="${id}"]`);
-  if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 16px rgba(0,245,212,.5)';setTimeout(()=>el.style.boxShadow='',1500);}
+  if(!future.length)return;
+  setTimeout(()=>{
+    const el=document.querySelector(`[data-id="${future[0].id}"]`);
+    if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 16px rgba(0,245,212,.6)';setTimeout(()=>el.style.boxShadow='',1500);}
+  },100);
 }
 function scrollToEvent(id){
-  // Switch to list view first
-  switchView('list',document.querySelector('.view-tab'));
+  switchView('list');
   setTimeout(()=>{
     const el=document.querySelector(`[data-id="${id}"]`);
-    if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 16px rgba(255,45,120,.5)';setTimeout(()=>el.style.boxShadow='',1500);}
+    if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 16px rgba(255,45,120,.6)';setTimeout(()=>el.style.boxShadow='',1500);}
   },100);
 }
 
-// ROUTE & TIMETABLE HTML
+// --- RENDER ---
+function renderAll(){renderTickets();renderUpcoming();updateStats();if(currentView==='cal')renderCalendar();}
+
 function buildRouteHtml(ev,idx){
   if(!ev.departure)return'';
-  const depEnc=encodeURIComponent(ev.departure),venueEnc=encodeURIComponent(ev.venue||'');
+  const de=encodeURIComponent(ev.departure),ve=encodeURIComponent(ev.venue||'');
   return`<div class="card-section">
     <div class="card-section-label">🚃 会場までのルート</div>
     <div class="card-route-inputs">
-      <input class="card-route-input" value="${escHtml(ev.departure)}" id="dep-${idx}" placeholder="出発地">
+      <input class="card-inp" value="${esc(ev.departure)}" id="dep-${idx}" placeholder="出発地">
       <div class="card-route-arrow">→</div>
-      <input class="card-route-input" value="${escHtml(ev.venue||'')}" id="arr-${idx}" placeholder="会場">
+      <input class="card-inp" value="${esc(ev.venue||'')}" id="arr-${idx}" placeholder="会場">
     </div>
     <button class="card-route-btn" onclick="openRoute('${idx}')">🔍 乗換案内を開く</button>
-    <div style="font-size:10px;"><a href="https://transit.yahoo.co.jp/search/print?from=${depEnc}&to=${venueEnc}" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;">📱 Yahoo!乗換案内で開く →</a></div>
+    <a href="https://transit.yahoo.co.jp/search/print?from=${de}&to=${ve}" target="_blank" rel="noopener" style="font-size:10px;color:var(--gold);text-decoration:none;">📱 Yahoo!乗換案内で開く →</a>
   </div>`;
 }
 
-function buildTimetableHtml(ev){
+function buildTlHtml(ev){
   const tl=ev.timetable||[];
-  const rows=tl.map((t,i)=>`
-    <div class="card-tl-item">
-      <div class="card-tl-time">${escHtml(t.time)}</div>
-      <div><div class="card-tl-name">${escHtml(t.name)}</div>${t.detail?`<div class="card-tl-detail">${escHtml(t.detail)}</div>`:''}</div>
-      <button class="card-tl-delete" onclick="deleteTlItem('${ev.id}',${i})">✕</button>
-    </div>`).join('');
+  const rows=tl.map((t,i)=>`<div class="card-tl-item">
+    <div class="card-tl-time">${esc(t.time)}</div>
+    <div><div class="card-tl-name">${esc(t.name)}</div>${t.detail?`<div class="card-tl-detail">${esc(t.detail)}</div>`:''}</div>
+    <button class="card-tl-del" onclick="delTl('${ev.id}',${i})">✕</button>
+  </div>`).join('');
   return`<div class="card-section">
     <div class="card-section-label">📋 タイムテーブル</div>
     <div class="card-tl-list">${rows||'<div style="font-size:11px;color:var(--muted);padding:4px 0;">まだ追加されていません</div>'}</div>
     <div class="card-tl-add">
-      <input class="card-tl-input time-inp" type="text" id="tl-time-${ev.id}" placeholder="18:30" maxlength="5">
-      <input class="card-tl-input" type="text" id="tl-name-${ev.id}" placeholder="アーティスト名">
-      <button class="card-tl-addbtn" onclick="addTlItem('${ev.id}')">＋</button>
+      <input class="card-tl-inp time-inp" type="text" id="tl-t-${ev.id}" placeholder="18:30" maxlength="5">
+      <input class="card-tl-inp" type="text" id="tl-n-${ev.id}" placeholder="アーティスト名">
+      <button class="card-tl-addbtn" onclick="addTl('${ev.id}')">＋</button>
     </div>
   </div>`;
 }
 
-function buildSetlistHtml(ev){
-  const sl=ev.setlist||'';
+function buildSlHtml(ev){
   return`<div class="card-section">
     <div class="card-section-label">🎵 セットリスト</div>
-    <textarea class="setlist-textarea" id="sl-${ev.id}" placeholder="曲名を入力&#10;（例）&#10;1. 君と歩いた道&#10;2. Summer Rain">${escHtml(sl)}</textarea>
-    <button class="setlist-save-btn" onclick="saveSetlist('${ev.id}')">保存</button>
+    <textarea class="setlist-ta" id="sl-${ev.id}" placeholder="曲名を入力&#10;1. 曲名&#10;2. 曲名">${esc(ev.setlist||'')}</textarea>
+    <button class="setlist-save" onclick="saveSl('${ev.id}')">保存</button>
   </div>`;
 }
 
 function openRoute(idx){
   const dep=document.getElementById(`dep-${idx}`).value;
   const arr=document.getElementById(`arr-${idx}`).value;
-  if(!dep||!arr)return;
-  window.open(`https://transit.yahoo.co.jp/search/print?from=${encodeURIComponent(dep)}&to=${encodeURIComponent(arr)}`,'_blank');
+  if(dep&&arr)window.open(`https://transit.yahoo.co.jp/search/print?from=${encodeURIComponent(dep)}&to=${encodeURIComponent(arr)}`,'_blank');
 }
-
-function addTlItem(evId){
-  const timeEl=document.getElementById(`tl-time-${evId}`);
-  const nameEl=document.getElementById(`tl-name-${evId}`);
-  const time=timeEl.value.trim(),name=nameEl.value.trim();
-  if(!time||!name){showToast('⚠️ 時間とアーティスト名を入力してください','error');return;}
+function addTl(evId){
+  const t=document.getElementById(`tl-t-${evId}`).value.trim();
+  const n=document.getElementById(`tl-n-${evId}`).value.trim();
+  if(!t||!n){showToast('⚠️ 時間とアーティスト名を入力してください','error');return;}
   const idx=events.findIndex(e=>e.id===evId);if(idx===-1)return;
   if(!events[idx].timetable)events[idx].timetable=[];
-  events[idx].timetable.push({time,name,detail:''});
+  events[idx].timetable.push({time:t,name:n,detail:''});
   events[idx].timetable.sort((a,b)=>a.time.localeCompare(b.time));
   persist();renderAll();
 }
-
-function deleteTlItem(evId,tlIdx){
+function delTl(evId,ti){
   const idx=events.findIndex(e=>e.id===evId);if(idx===-1)return;
-  events[idx].timetable.splice(tlIdx,1);persist();renderAll();
+  events[idx].timetable.splice(ti,1);persist();renderAll();
 }
-
-function saveSetlist(evId){
+function saveSl(evId){
   const ta=document.getElementById(`sl-${evId}`);if(!ta)return;
   const idx=events.findIndex(e=>e.id===evId);if(idx===-1)return;
   events[idx].setlist=ta.value;persist();showToast('✅ セットリストを保存しました','success');
 }
 
-// DRAG & DROP (mouse + touch対応)
-let touchDragId=null;
 function setupDrag(card,evId){
-  // Mouse drag
   card.setAttribute('draggable','true');
   card.addEventListener('dragstart',e=>{dragSrcId=evId;card.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
   card.addEventListener('dragend',()=>{card.classList.remove('dragging');document.querySelectorAll('.ticket-card').forEach(c=>c.classList.remove('drag-over'));});
@@ -494,18 +478,13 @@ function setupDrag(card,evId){
   card.addEventListener('drop',e=>{
     e.preventDefault();card.classList.remove('drag-over');
     if(dragSrcId===evId)return;
-    const srcIdx=events.findIndex(ev=>ev.id===dragSrcId);
-    const dstIdx=events.findIndex(ev=>ev.id===evId);
-    if(srcIdx===-1||dstIdx===-1)return;
-    const [moved]=events.splice(srcIdx,1);events.splice(dstIdx,0,moved);
-    persist();renderAll();
+    const si=events.findIndex(ev=>ev.id===dragSrcId),di=events.findIndex(ev=>ev.id===evId);
+    if(si===-1||di===-1)return;
+    const [m]=events.splice(si,1);events.splice(di,0,m);persist();renderAll();
   });
-  // Touch drag（ハンドルを長押し→スライド→離す）
   const handle=card.querySelector('.drag-handle');
   if(!handle)return;
-  handle.addEventListener('touchstart',e=>{
-    e.preventDefault();touchDragId=evId;card.classList.add('dragging');
-  },{passive:false});
+  handle.addEventListener('touchstart',e=>{e.preventDefault();touchDragId=evId;card.classList.add('dragging');},{passive:false});
   handle.addEventListener('touchmove',e=>{
     e.preventDefault();
     const touch=e.touches[0];
@@ -518,9 +497,8 @@ function setupDrag(card,evId){
     card.classList.remove('dragging');
     const over=document.querySelector('.ticket-card.drag-over');
     if(over&&over.dataset.id!==touchDragId){
-      const srcIdx=events.findIndex(ev=>ev.id===touchDragId);
-      const dstIdx=events.findIndex(ev=>ev.id===over.dataset.id);
-      if(srcIdx!==-1&&dstIdx!==-1){const [moved]=events.splice(srcIdx,1);events.splice(dstIdx,0,moved);persist();renderAll();showToast('✅ 並び替えました','success');}
+      const si=events.findIndex(ev=>ev.id===touchDragId),di=events.findIndex(ev=>ev.id===over.dataset.id);
+      if(si!==-1&&di!==-1){const [m]=events.splice(si,1);events.splice(di,0,m);persist();renderAll();showToast('✅ 並び替えました','success');}
     }
     document.querySelectorAll('.ticket-card').forEach(c=>c.classList.remove('drag-over'));
     touchDragId=null;
@@ -534,41 +512,41 @@ function renderTickets(){
   if(events.length===0){list.appendChild(empty);return;}
   events.forEach((ev,idx)=>{
     const dT=daysUntil(ev.ticketDate),dE=daysUntil(ev.eventDate);
-    const pillClass=dT!==null&&dT>=0&&dT<14?'urgent':dE!==null&&dE>=0&&dE<30?'warn':'safe';
-    const pillText=dT!==null&&dT>=0?`チケット発売まで ${dT}日`:dE!==null&&dE>=0?`イベントまで ${dE}日`:dE!==null&&dE<0?'終了済み':'日程未設定';
-    const tValCls=dT!==null&&dT<14&&dT>=0?'urgent':dT!==null&&dT<0?'ok':'';
-    const tValTxt=dT===null?'未設定':dT<0?'発売中':formatDT(ev.ticketDate);
+    const pillCls=dT!==null&&dT>=0&&dT<14?'urgent':dE!==null&&dE>=0&&dE<30?'warn':'safe';
+    const pillTxt=dT!==null&&dT>=0?`チケット発売まで ${dT}日`:dE!==null&&dE>=0?`イベントまで ${dE}日`:dE!==null&&dE<0?'終了済み':'日程未設定';
+    const tCls=dT!==null&&dT<14&&dT>=0?'urgent':dT!==null&&dT<0?'ok':'';
+    const tTxt=dT===null?'未設定':dT<0?'発売中':fmtDT(ev.ticketDate);
     let linkHtml='';
-    if(ev.ticketSite&&SITE_CONFIG[ev.ticketSite]){
-      const cfg=SITE_CONFIG[ev.ticketSite];
-      linkHtml=`<a class="ticket-link-btn ${cfg.cls}" href="${escHtml(ev.ticketUrl||cfg.url)}" target="_blank" rel="noopener">🎟 ${cfg.label}で購入</a>`;
+    if(ev.ticketSite&&SITES[ev.ticketSite]){
+      const s=SITES[ev.ticketSite];
+      linkHtml=`<a class="ticket-link-btn ${s.cls}" href="${esc(ev.ticketUrl||s.url)}" target="_blank" rel="noopener">🎟 ${s.label}で購入</a>`;
     }else if(ev.ticketUrl){
-      linkHtml=`<a class="ticket-link-btn tl-custom" href="${escHtml(ev.ticketUrl)}" target="_blank" rel="noopener">🎟 チケット購入</a>`;
+      linkHtml=`<a class="ticket-link-btn tl-custom" href="${esc(ev.ticketUrl)}" target="_blank" rel="noopener">🎟 チケット購入</a>`;
     }
     const card=document.createElement('div');
     card.className='ticket-card';card.dataset.id=ev.id;
     card.innerHTML=`<div class="ticket-inner">
       <div class="card-top-row">
-        <span class="event-category ${CAT_CLS[ev.category]}">${CAT_LABELS[ev.category]}</span>
+        <span class="event-category ${CATCLS[ev.category]||'cat-live'}">${CAT[ev.category]||'LIVE'}</span>
         <div class="card-btn-group">
           <span class="drag-handle" title="ドラッグで並び替え">⠿</span>
-          <button class="edit-btn" onclick="openEditModal('${ev.id}')">✏️</button>
-          <button class="delete-btn" onclick="confirmDelete('${ev.id}')">✕</button>
+          <button class="ibtn" onclick="openEditModal('${ev.id}')" title="編集">✏️</button>
+          <button class="ibtn" onclick="confirmDelete('${ev.id}')" title="削除" style="color:var(--muted)">✕</button>
         </div>
       </div>
-      <div class="event-title">${escHtml(ev.title)}</div>
-      <div class="event-artist">${escHtml(ev.artist||'—')} / ${escHtml(ev.venue||'—')}</div>
+      <div class="event-title">${esc(ev.title)}</div>
+      <div class="event-artist">${esc(ev.artist||'—')} / ${esc(ev.venue||'—')}</div>
       ${linkHtml}
       <div class="perfo"></div>
       <div class="ticket-meta">
-        <div class="meta-item"><label>🎫 チケット発売</label><div class="val ${tValCls}">${tValTxt}</div></div>
-        <div class="meta-item"><label>📍 会場</label><div class="val">${escHtml(ev.venue||'—')}</div></div>
-        <div class="meta-item"><label>📅 イベント日</label><div class="val">${formatDT(ev.eventDate)}</div></div>
-        <div class="meta-item"><label>💺 座席 / メモ</label><div class="val ${ev.memo?'ok':'soon'}">${ev.memo?escHtml(ev.memo):'未取得'}</div></div>
+        <div class="meta-item"><label>🎫 チケット発売</label><div class="val ${tCls}">${tTxt}</div></div>
+        <div class="meta-item"><label>📍 会場</label><div class="val">${esc(ev.venue||'—')}</div></div>
+        <div class="meta-item"><label>📅 イベント日</label><div class="val">${fmtDT(ev.eventDate)}</div></div>
+        <div class="meta-item"><label>💺 座席 / メモ</label><div class="val ${ev.memo?'ok':'soon'}">${ev.memo?esc(ev.memo):'未取得'}</div></div>
       </div>
-      <div class="countdown-pill ${pillClass}"><span class="pulse-dot"></span>${pillText}</div>
-      ${buildTimetableHtml(ev)}
-      ${buildSetlistHtml(ev)}
+      <div class="countdown-pill ${pillCls}"><span class="pulse-dot"></span>${pillTxt}</div>
+      ${buildTlHtml(ev)}
+      ${buildSlHtml(ev)}
       ${buildRouteHtml(ev,idx)}
     </div>`;
     setupDrag(card,ev.id);
@@ -583,22 +561,20 @@ function renderUpcoming(){
   if(events.length===0){list.appendChild(empty);return;}
   const rows=[];
   events.forEach(ev=>{
-    if(ev.ticketDate)rows.push({date:ev.ticketDate,label:`🎫 チケット発売 — ${ev.title}`,sub:`${formatDT(ev.ticketDate)}〜 / ${ev.venue||''}`,isTicket:true,id:ev.id});
-    if(ev.eventDate)rows.push({date:ev.eventDate,label:`🎤 ${ev.title}`,sub:`${formatDT(ev.eventDate)}〜 / ${ev.venue||''}`,isTicket:false,id:ev.id});
+    if(ev.ticketDate)rows.push({date:ev.ticketDate,label:`🎫 チケット発売 — ${ev.title}`,sub:`${fmtDT(ev.ticketDate)}〜 / ${ev.venue||''}`,isTicket:true,id:ev.id});
+    if(ev.eventDate)rows.push({date:ev.eventDate,label:`🎤 ${ev.title}`,sub:`${fmtDT(ev.eventDate)}〜 / ${ev.venue||''}`,isTicket:false,id:ev.id});
   });
   rows.sort((a,b)=>new Date(a.date)-new Date(b.date));
   rows.forEach(row=>{
     const d=new Date(row.date),days=Math.ceil((d-nowDate)/86400000);
-    const dClass=days<14?'':days<30?'warn':'safe';
+    const dCls=days<14?'':days<30?'warn':'safe';
     const item=document.createElement('div');item.className='upcoming-item';
-    item.onclick=(e)=>{if(!e.target.classList.contains('upcoming-delete-btn'))scrollToEvent(row.id);};
+    item.onclick=ev=>{if(!ev.target.classList.contains('upcoming-del'))scrollToEvent(row.id);};
     item.innerHTML=`
-      <div class="upcoming-date-box ${row.isTicket?'ticket-day':''}">
-        <span class="month">${MONTHS[d.getMonth()]}</span><span class="day">${d.getDate()}</span>
-      </div>
-      <div class="upcoming-info"><div class="title">${escHtml(row.label)}</div><div class="sub">${escHtml(row.sub)}</div></div>
-      <div class="upcoming-days-left ${dClass}"><span class="num">${days<0?'—':days}</span><span class="label">${days<0?'終了':'日後'}</span></div>
-      <button class="upcoming-delete-btn" onclick="confirmDelete('${row.id}')">✕</button>`;
+      <div class="upcoming-date-box ${row.isTicket?'ticket-day':''}"><span class="month">${MON[d.getMonth()]}</span><span class="day">${d.getDate()}</span></div>
+      <div class="upcoming-info"><div class="title">${esc(row.label)}</div><div class="sub">${esc(row.sub)}</div></div>
+      <div class="upcoming-days-left ${dCls}"><span class="num">${days<0?'—':days}</span><span class="label">${days<0?'終了':'日後'}</span></div>
+      <button class="upcoming-del" onclick="confirmDelete('${row.id}')">✕</button>`;
     list.appendChild(item);
   });
 }
@@ -606,132 +582,78 @@ function renderUpcoming(){
 function updateStats(){
   document.getElementById('stat-events').textContent=events.length;
   document.getElementById('stat-tickets').textContent=events.filter(ev=>{const d=daysUntil(ev.ticketDate);return d!==null&&d>=0;}).length;
-  const nearest=events.filter(ev=>ev.eventDate&&daysUntil(ev.eventDate)>=0).map(ev=>daysUntil(ev.eventDate)).sort((a,b)=>a-b)[0];
-  document.getElementById('stat-nearest').textContent=nearest!==undefined?nearest:'—';
+  const near=events.filter(ev=>ev.eventDate&&daysUntil(ev.eventDate)>=0).map(ev=>daysUntil(ev.eventDate)).sort((a,b)=>a-b)[0];
+  document.getElementById('stat-nearest').textContent=near!==undefined?near:'—';
 }
 
 // CALENDAR
 function renderCalendar(){
-  const label=document.getElementById('cal-month-label');
+  document.getElementById('cal-month-label').textContent=`${calYear}年 ${JPMON[calMonth]}`;
   const grid=document.getElementById('cal-grid');
-  label.textContent=`${calYear}年 ${JPMONTHS[calMonth]}`;
   grid.innerHTML='';
-  ['日','月','火','水','木','金','土'].forEach(d=>{
-    const el=document.createElement('div');el.className='cal-dow';el.textContent=d;grid.appendChild(el);
-  });
+  ['日','月','火','水','木','金','土'].forEach(d=>{const el=document.createElement('div');el.className='cal-dow';el.textContent=d;grid.appendChild(el);});
   const first=new Date(calYear,calMonth,1);
   const last=new Date(calYear,calMonth+1,0);
   const startDow=first.getDay();
-  // prev month fill
-  for(let i=0;i<startDow;i++){
-    const d=new Date(calYear,calMonth,-(startDow-1-i));
-    grid.appendChild(makeCalDay(d,true));
-  }
-  for(let d=1;d<=last.getDate();d++){
-    grid.appendChild(makeCalDay(new Date(calYear,calMonth,d),false));
-  }
-  // next month fill
-  const total=startDow+last.getDate();
-  const remaining=(7-total%7)%7;
-  for(let i=1;i<=remaining;i++){grid.appendChild(makeCalDay(new Date(calYear,calMonth+1,i),true));}
+  for(let i=0;i<startDow;i++){grid.appendChild(makeCalDay(new Date(calYear,calMonth,-(startDow-1-i)),true));}
+  for(let d=1;d<=last.getDate();d++){grid.appendChild(makeCalDay(new Date(calYear,calMonth,d),false));}
+  const rem=(7-(startDow+last.getDate())%7)%7;
+  for(let i=1;i<=rem;i++){grid.appendChild(makeCalDay(new Date(calYear,calMonth+1,i),true));}
 }
-
-function makeCalDay(date,otherMonth){
+function makeCalDay(date,other){
   const el=document.createElement('div');
-  el.className='cal-day'+(otherMonth?' other-month':'');
-  const isToday=date.toDateString()===nowDate.toDateString();
-  if(isToday)el.classList.add('today');
-  const numEl=document.createElement('div');numEl.className='cal-day-num';numEl.textContent=date.getDate();el.appendChild(numEl);
-  const dateStr=`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+  el.className='cal-day'+(other?' other-month':'')+(date.toDateString()===nowDate.toDateString()?' today':'');
+  const num=document.createElement('div');num.className='cal-day-num';num.textContent=date.getDate();el.appendChild(num);
+  const ds=`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
   events.forEach(ev=>{
-    if(ev.ticketDate&&ev.ticketDate.startsWith(dateStr)){
-      const dot=document.createElement('div');dot.className='cal-event-dot ticket';dot.textContent='🎫 '+ev.title;
-      dot.onclick=()=>scrollToEvent(ev.id);el.appendChild(dot);
-    }
-    if(ev.eventDate&&ev.eventDate.startsWith(dateStr)){
-      const dot=document.createElement('div');dot.className=`cal-event-dot ${ev.category}`;dot.textContent='🎤 '+ev.title;
-      dot.onclick=()=>scrollToEvent(ev.id);el.appendChild(dot);
-    }
+    if(ev.ticketDate&&ev.ticketDate.startsWith(ds)){const dot=document.createElement('div');dot.className='cal-dot ticket';dot.textContent='🎫 '+ev.title;dot.onclick=()=>scrollToEvent(ev.id);el.appendChild(dot);}
+    if(ev.eventDate&&ev.eventDate.startsWith(ds)){const dot=document.createElement('div');dot.className=`cal-dot ${ev.category||'live'}`;dot.textContent='🎤 '+ev.title;dot.onclick=()=>scrollToEvent(ev.id);el.appendChild(dot);}
   });
   return el;
 }
-
 function calPrev(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCalendar();}
 function calNext(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCalendar();}
 
-// VIEW SWITCH
-function switchView(view,btn){
-  document.querySelectorAll('.view-tab').forEach(t=>t.classList.remove('active'));
-  if(btn)btn.classList.add('active');
-  document.getElementById('list-view-wrap').style.display=view==='list'?'block':'none';
-  document.getElementById('cal-view-wrap').style.display=view==='calendar'?'block':'none';
-  if(view==='calendar')renderCalendar();
+// MODAL ADD
+function openModal(){document.getElementById('modal-add').classList.add('open');}
+function closeModal(){document.getElementById('modal-add').classList.remove('open');}
+function setCat(cat,btn,prefix){
+  if(prefix==='add'){addCat=cat;['live','anime','game'].forEach(c=>{document.getElementById(`add-cat-${c}`).className='cat-btn';});}
+  else{editCat=cat;['live','anime','game'].forEach(c=>{document.getElementById(`edit-cat-${c}`).className='cat-btn';});}
+  btn.classList.add(`active-${cat}`);
 }
-
-// REMINDER (check every minute)
-let reminderDismissed={};
-function checkReminders(){
-  const now=new Date();
-  let msg=null,targetId=null;
-  events.forEach(ev=>{
-    if(ev.ticketDate&&!reminderDismissed[ev.id+'_ticket']){
-      const diff=(new Date(ev.ticketDate)-now)/60000;
-      if(diff>0&&diff<=60){msg=`🔔 「${ev.title}」のチケット発売まで約${Math.ceil(diff)}分！`;targetId=ev.id+'_ticket';}
-    }
-    if(ev.eventDate&&!reminderDismissed[ev.id+'_event']){
-      const diff=(new Date(ev.eventDate)-now)/60000;
-      if(diff>0&&diff<=60){msg=`🔔 「${ev.title}」まで約${Math.ceil(diff)}分！`;targetId=ev.id+'_event';}
-    }
-  });
-  const banner=document.getElementById('reminder-banner');
-  if(msg&&targetId){banner.textContent=msg+' （タップで閉じる）';banner.classList.add('show');banner.dataset.targetId=targetId;}
-  else{banner.classList.remove('show');}
+function setSite(site,btn,prefix){
+  if(prefix==='add'){addSite=site;document.querySelectorAll('#add-site-grid .site-btn').forEach(b=>b.classList.remove('active'));document.getElementById('add-url-row').style.display=site==='custom'?'flex':'none';}
+  else{editSite=site;document.querySelectorAll('#edit-site-grid .site-btn').forEach(b=>b.classList.remove('active'));document.getElementById('edit-url-row').style.display=site==='custom'?'flex':'none';}
+  btn.classList.add('active');
 }
-function dismissReminder(){
-  const banner=document.getElementById('reminder-banner');
-  if(banner.dataset.targetId)reminderDismissed[banner.dataset.targetId]=true;
-  banner.classList.remove('show');
-}
-setInterval(checkReminders,60000);
-
-// MODAL
-function openModal(){document.getElementById('modal-overlay').classList.add('open');}
-function closeModal(){document.getElementById('modal-overlay').classList.remove('open');}
-function closeModalOnBg(e){if(e.target===document.getElementById('modal-overlay'))closeModal();}
-function setCategory(cat,btn){currentCategory=cat;document.querySelectorAll('#modal-overlay .cat-btn').forEach(b=>b.className='cat-btn');btn.classList.add('active-'+cat);}
-function setSite(site,btn){currentSite=site;document.querySelectorAll('#modal-overlay .site-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('custom-url-row').style.display=site==='custom'?'flex':'none';}
-
 function saveEvent(){
-  const title=document.getElementById('new-title').value.trim();
+  const title=document.getElementById('add-title').value.trim();
   if(!title){showToast('⚠️ イベント名を入力してください','error');return;}
   const ev={
-    id:Date.now().toString(),category:currentCategory,title,
-    artist:document.getElementById('new-artist').value.trim(),
-    venue:document.getElementById('new-venue').value.trim(),
-    ticketDate:document.getElementById('new-ticket-date').value,
-    eventDate:document.getElementById('new-event-date').value,
-    ticketSite:currentSite,
-    ticketUrl:document.getElementById('new-ticket-url').value.trim(),
-    memo:document.getElementById('new-memo').value.trim(),
-    departure:document.getElementById('new-departure').value.trim(),
+    id:Date.now().toString(),category:addCat,title,
+    artist:document.getElementById('add-artist').value.trim(),
+    venue:document.getElementById('add-venue').value.trim(),
+    ticketDate:document.getElementById('add-ticket-date').value,
+    eventDate:document.getElementById('add-event-date').value,
+    ticketSite:addSite,ticketUrl:document.getElementById('add-ticket-url').value.trim(),
+    memo:document.getElementById('add-memo').value.trim(),
+    departure:document.getElementById('add-departure').value.trim(),
     timetable:[],setlist:'',
   };
-  events.push(ev);
-  sortEvents();
-  persist();renderAll();
-  ['new-title','new-artist','new-venue','new-ticket-date','new-event-date','new-ticket-url','new-memo','new-departure'].forEach(id=>document.getElementById(id).value='');
-  currentSite=null;document.querySelectorAll('#modal-overlay .site-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('custom-url-row').style.display='none';
-  setCategory('live',document.querySelector('#modal-overlay .cat-btn'));
+  events.push(ev);sortByDate();persist();renderAll();
+  ['add-title','add-artist','add-venue','add-ticket-date','add-event-date','add-ticket-url','add-memo','add-departure'].forEach(id=>document.getElementById(id).value='');
+  addSite=null;document.querySelectorAll('#add-site-grid .site-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('add-url-row').style.display='none';
+  setCat('live',document.getElementById('add-cat-live'),'add');
   closeModal();showToast('✅ イベントを追加しました！','success');
 }
 
-// EDIT
-let editTargetId=null,editCategory='live',editSite=null;
+// MODAL EDIT
 function openEditModal(id){
-  editTargetId=id;
-  const ev=events.find(e=>e.id===id);if(!ev)return;
-  editCategory=ev.category;
+  editId=id;const ev=events.find(e=>e.id===id);if(!ev)return;
+  editCat=ev.category||'live';
+  ['live','anime','game'].forEach(c=>{document.getElementById(`edit-cat-${c}`).className='cat-btn'+(c===editCat?` active-${c}`:'');});
   document.getElementById('edit-title').value=ev.title||'';
   document.getElementById('edit-artist').value=ev.artist||'';
   document.getElementById('edit-venue').value=ev.venue||'';
@@ -740,53 +662,46 @@ function openEditModal(id){
   document.getElementById('edit-ticket-url').value=ev.ticketUrl||'';
   document.getElementById('edit-memo').value=ev.memo||'';
   document.getElementById('edit-departure').value=ev.departure||'';
-  ['live','anime','game'].forEach(c=>{const b=document.getElementById(`edit-cat-${c}`);b.className='cat-btn'+(c===ev.category?` active-${c}`:'');});
   editSite=ev.ticketSite||null;
   document.querySelectorAll('#edit-site-grid .site-btn').forEach(b=>b.classList.remove('active'));
-  if(editSite){const siteNames={eplus:'e+',lawson:'ローチケ',tpia:'チケぴ',tiget:'Tiget',ticketdive:'TicketDive',livepocket:'LivePocket'};document.querySelectorAll('#edit-site-grid .site-btn').forEach(b=>{if(b.textContent===siteNames[editSite])b.classList.add('active');});}
-  document.getElementById('edit-custom-url-row').style.display=editSite==='custom'?'flex':'none';
-  document.getElementById('edit-modal-overlay').classList.add('open');
+  if(editSite){const names={eplus:'e+',lawson:'ローチケ',tpia:'チケぴ',tiget:'Tiget',ticketdive:'TicketDive',livepocket:'LivePocket'};document.querySelectorAll('#edit-site-grid .site-btn').forEach(b=>{if(b.textContent===names[editSite])b.classList.add('active');});}
+  document.getElementById('edit-url-row').style.display=editSite==='custom'?'flex':'none';
+  document.getElementById('modal-edit').classList.add('open');
 }
-function closeEditModal(){document.getElementById('edit-modal-overlay').classList.remove('open');editTargetId=null;}
-function closeEditModalOnBg(e){if(e.target===document.getElementById('edit-modal-overlay'))closeEditModal();}
-function setEditCategory(cat,btn){editCategory=cat;['live','anime','game'].forEach(c=>{document.getElementById(`edit-cat-${c}`).className='cat-btn';});btn.classList.add('active-'+cat);}
-function setEditSite(site,btn){editSite=site;document.querySelectorAll('#edit-site-grid .site-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('edit-custom-url-row').style.display=site==='custom'?'flex':'none';}
+function closeEditModal(){document.getElementById('modal-edit').classList.remove('open');editId=null;}
 function saveEdit(){
   const title=document.getElementById('edit-title').value.trim();
   if(!title){showToast('⚠️ イベント名を入力してください','error');return;}
-  const idx=events.findIndex(e=>e.id===editTargetId);if(idx===-1)return;
-  events[idx]={...events[idx],category:editCategory,title,
+  const idx=events.findIndex(e=>e.id===editId);if(idx===-1)return;
+  events[idx]={...events[idx],category:editCat,title,
     artist:document.getElementById('edit-artist').value.trim(),
     venue:document.getElementById('edit-venue').value.trim(),
     ticketDate:document.getElementById('edit-ticket-date').value,
     eventDate:document.getElementById('edit-event-date').value,
-    ticketSite:editSite,
-    ticketUrl:document.getElementById('edit-ticket-url').value.trim(),
+    ticketSite:editSite,ticketUrl:document.getElementById('edit-ticket-url').value.trim(),
     memo:document.getElementById('edit-memo').value.trim(),
     departure:document.getElementById('edit-departure').value.trim(),
   };
-  sortEvents();persist();renderAll();closeEditModal();showToast('✅ 更新しました！','success');
+  sortByDate();persist();renderAll();closeEditModal();showToast('✅ 更新しました！','success');
 }
 
 // DELETE
 function confirmDelete(id){
-  deleteTargetId=id;
-  const ev=events.find(e=>e.id===id);
-  document.getElementById('confirm-target-name').textContent=ev?`「${ev.title}」を削除します`:'削除すると元に戻せません';
+  deleteId=id;const ev=events.find(e=>e.id===id);
+  document.getElementById('confirm-sub').textContent=ev?`「${ev.title}」を削除します`:'削除すると元に戻せません';
   document.getElementById('confirm-overlay').classList.add('open');
 }
-function closeConfirm(){deleteTargetId=null;document.getElementById('confirm-overlay').classList.remove('open');}
-function execDelete(){events=events.filter(e=>e.id!==deleteTargetId);persist();renderAll();closeConfirm();showToast('🗑️ 削除しました','success');}
+function closeConfirm(){deleteId=null;document.getElementById('confirm-overlay').classList.remove('open');}
+function execDelete(){events=events.filter(e=>e.id!==deleteId);persist();renderAll();closeConfirm();showToast('🗑️ 削除しました','success');}
 
 // BUDGET
 function editBudget(){
   const card=document.getElementById('budget-card');
-  const current=document.getElementById('stat-budget').textContent.replace(/[¥,]/g,'');
-  card.innerHTML=`<input class="budget-input" id="budget-input" type="text" inputmode="numeric" pattern="[0-9]*" value="${current}" autocomplete="off" autocorrect="off" spellcheck="false"><div class="stat-label">入力後、外をタップで確定</div>`;
-  const inp=document.getElementById('budget-input');inp.focus();
-  setTimeout(()=>inp.select(),50);
+  const cur=document.getElementById('stat-budget').textContent.replace(/[¥,]/g,'');
+  card.innerHTML=`<input class="budget-input" id="budget-input" type="text" inputmode="numeric" pattern="[0-9]*" value="${cur}" autocomplete="off" autocorrect="off" spellcheck="false"><div class="stat-label">入力後、外をタップで確定</div>`;
+  const inp=document.getElementById('budget-input');inp.focus();setTimeout(()=>inp.select(),50);
   let saved=false;
-  function saveBudget(){
+  function save(){
     if(saved)return;saved=true;
     const val=parseInt(inp.value.replace(/[^0-9]/g,''))||0;
     const fmt='¥'+val.toLocaleString('ja-JP');
@@ -794,12 +709,25 @@ function editBudget(){
     card.innerHTML=`<div class="stat-num purple" id="stat-budget">${fmt}</div><div class="stat-label">今月の推し活予算 ✏️</div>`;
     card.onclick=editBudget;
   }
-  inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();saveBudget();}});
-  inp.addEventListener('blur',saveBudget);
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();save();}});
+  inp.addEventListener('blur',save);
 }
-function loadBudget(){
-  try{const v=localStorage.getItem('ev_budget');if(v){document.getElementById('stat-budget').textContent='¥'+parseInt(v).toLocaleString('ja-JP');}}catch(e){}
+function loadBudget(){try{const v=localStorage.getItem('ev_budget');if(v)document.getElementById('stat-budget').textContent='¥'+parseInt(v).toLocaleString('ja-JP');}catch(e){}}
+
+// REMINDER
+let reminderDismissed={};
+function checkReminders(){
+  const now=new Date();let msg=null,tid=null;
+  events.forEach(ev=>{
+    if(ev.ticketDate&&!reminderDismissed[ev.id+'_t']){const diff=(new Date(ev.ticketDate)-now)/60000;if(diff>0&&diff<=60){msg=`🔔 「${ev.title}」チケット発売まで約${Math.ceil(diff)}分！`;tid=ev.id+'_t';}}
+    if(ev.eventDate&&!reminderDismissed[ev.id+'_e']){const diff=(new Date(ev.eventDate)-now)/60000;if(diff>0&&diff<=60){msg=`🔔 「${ev.title}」まで約${Math.ceil(diff)}分！`;tid=ev.id+'_e';}}
+  });
+  const b=document.getElementById('reminder-banner');
+  if(msg&&tid){b.textContent=msg+' （タップで閉じる）';b.classList.add('show');b.dataset.tid=tid;}
+  else b.classList.remove('show');
 }
+function dismissReminder(){const b=document.getElementById('reminder-banner');if(b.dataset.tid)reminderDismissed[b.dataset.tid]=true;b.classList.remove('show');}
+setInterval(checkReminders,60000);
 
 function showToast(msg,type='success'){
   const t=document.getElementById('toast');t.textContent=msg;t.className=`toast ${type}`;
@@ -807,11 +735,12 @@ function showToast(msg,type='success'){
   setTimeout(()=>t.classList.remove('show'),2800);
 }
 
-// INIT - migrate old storage key
-try{const old=localStorage.getItem('wota_events');if(old&&!localStorage.getItem('ev_events')){localStorage.setItem('ev_events',old);}}catch(e){}
+// INIT
 loadFromStorage();
 loadBudget();
-switchView('list',document.querySelector('.view-tab'));
+renderAll();
+switchView('list');
+checkReminders();
 </script>
 </body>
 </html>
