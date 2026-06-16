@@ -16,6 +16,7 @@
   .logo{font-size:16px;font-weight:900;}.logo span:first-child{color:var(--pink);}.logo span:last-child{color:var(--mint);}
   .header-right{display:flex;align-items:center;gap:6px;}
   .save-btn{background:rgba(0,245,212,.1);color:var(--mint);border:1px solid rgba(0,245,212,.3);padding:7px 10px;border-radius:6px;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
+  .load-btn{background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.3);padding:7px 10px;border-radius:6px;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
   .add-btn{background:var(--pink);color:#fff;border:none;padding:7px 12px;border-radius:6px;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
   .today-badge{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);border:1px solid var(--border);padding:3px 6px;border-radius:4px;}
 
@@ -208,6 +209,8 @@
   <div class="logo"><span>イベント情報</span><span>Dashboard</span></div>
   <div class="header-right">
     <div class="today-badge" id="today-badge"></div>
+    <button class="load-btn" onclick="document.getElementById('json-input').click()">📂 読込</button>
+    <input type="file" id="json-input" accept=".json" style="display:none" onchange="loadFromFile(event)">
     <button class="save-btn" onclick="saveToFile()">💾 保存</button>
     <button class="add-btn" onclick="openModal()">＋ 追加</button>
   </div>
@@ -344,7 +347,24 @@ const JPMONTHS=['1月','2月','3月','4月','5月','6月','7月','8月','9月','
 // STORAGE
 function persist(){try{localStorage.setItem('ev_events',JSON.stringify(events));}catch(e){}}
 function loadFromStorage(){try{const r=localStorage.getItem('ev_events');if(r){events=JSON.parse(r);renderAll();}}catch(e){}}
-function saveToFile(){
+function loadFromFile(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      const loaded=data.events||data;
+      if(!Array.isArray(loaded))throw new Error();
+      events=loaded;
+      persist();renderAll();
+      showToast(`✅ ${loaded.length}件のイベントを読み込みました！`,'success');
+    }catch(err){
+      showToast('⚠️ 読み込みに失敗しました','error');
+    }
+    e.target.value='';
+  };
+  reader.readAsText(file);
+}
   const blob=new Blob([JSON.stringify({savedAt:new Date().toISOString(),events},null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob),a=document.createElement('a');
   const d=nowDate;
