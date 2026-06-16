@@ -55,7 +55,7 @@
   .cat-anime{background:rgba(0,245,212,.15);color:var(--mint);border:1px solid rgba(0,245,212,.3);}
   .cat-game{background:rgba(255,215,0,.15);color:var(--gold);border:1px solid rgba(255,215,0,.3);}
   .card-btn-group{display:flex;gap:2px;align-items:center;}
-  .drag-handle{color:var(--muted);font-size:14px;cursor:grab;padding:2px 4px;touch-action:none;}
+  .drag-handle{color:var(--muted);font-size:20px;cursor:grab;padding:4px 8px;touch-action:none;line-height:1;user-select:none;-webkit-user-select:none;}
   .delete-btn{background:none;border:none;color:var(--muted);font-size:15px;cursor:pointer;padding:2px 5px;border-radius:4px;line-height:1;}
   .delete-btn:hover{color:var(--pink);}
   .edit-btn{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;padding:2px 5px;border-radius:4px;line-height:1;}
@@ -462,12 +462,14 @@ function saveSetlist(evId){
   events[idx].setlist=ta.value;persist();showToast('✅ セットリストを保存しました','success');
 }
 
-// DRAG & DROP (touch + mouse)
+// DRAG & DROP (mouse + touch対応)
+let touchDragId=null;
 function setupDrag(card,evId){
+  // Mouse drag
   card.setAttribute('draggable','true');
   card.addEventListener('dragstart',e=>{dragSrcId=evId;card.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
   card.addEventListener('dragend',()=>{card.classList.remove('dragging');document.querySelectorAll('.ticket-card').forEach(c=>c.classList.remove('drag-over'));});
-  card.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='move';card.classList.add('drag-over');});
+  card.addEventListener('dragover',e=>{e.preventDefault();card.classList.add('drag-over');});
   card.addEventListener('dragleave',()=>card.classList.remove('drag-over'));
   card.addEventListener('drop',e=>{
     e.preventDefault();card.classList.remove('drag-over');
@@ -477,6 +479,31 @@ function setupDrag(card,evId){
     if(srcIdx===-1||dstIdx===-1)return;
     const [moved]=events.splice(srcIdx,1);events.splice(dstIdx,0,moved);
     persist();renderAll();
+  });
+  // Touch drag（ハンドルを長押し→スライド→離す）
+  const handle=card.querySelector('.drag-handle');
+  if(!handle)return;
+  handle.addEventListener('touchstart',e=>{
+    e.preventDefault();touchDragId=evId;card.classList.add('dragging');
+  },{passive:false});
+  handle.addEventListener('touchmove',e=>{
+    e.preventDefault();
+    const touch=e.touches[0];
+    document.querySelectorAll('.ticket-card').forEach(c=>c.classList.remove('drag-over'));
+    const els=document.elementsFromPoint(touch.clientX,touch.clientY);
+    const target=els.find(el=>el.classList&&el.classList.contains('ticket-card')&&el.dataset.id!==touchDragId);
+    if(target)target.classList.add('drag-over');
+  },{passive:false});
+  handle.addEventListener('touchend',()=>{
+    card.classList.remove('dragging');
+    const over=document.querySelector('.ticket-card.drag-over');
+    if(over&&over.dataset.id!==touchDragId){
+      const srcIdx=events.findIndex(ev=>ev.id===touchDragId);
+      const dstIdx=events.findIndex(ev=>ev.id===over.dataset.id);
+      if(srcIdx!==-1&&dstIdx!==-1){const [moved]=events.splice(srcIdx,1);events.splice(dstIdx,0,moved);persist();renderAll();showToast('✅ 並び替えました','success');}
+    }
+    document.querySelectorAll('.ticket-card').forEach(c=>c.classList.remove('drag-over'));
+    touchDragId=null;
   });
 }
 
@@ -616,8 +643,8 @@ function calNext(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCalend
 function switchView(view,btn){
   document.querySelectorAll('.view-tab').forEach(t=>t.classList.remove('active'));
   if(btn)btn.classList.add('active');
-  document.getElementById('list-view-wrap').style.display=view==='list'?'':'none';
-  document.getElementById('cal-view-wrap').style.display=view==='calendar'?'':'none';
+  document.getElementById('list-view-wrap').style.display=view==='list'?'block':'none';
+  document.getElementById('cal-view-wrap').style.display=view==='calendar'?'block':'none';
   if(view==='calendar')renderCalendar();
 }
 
