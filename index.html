@@ -45,6 +45,12 @@
   .cat-game{background:rgba(255,215,0,.15);color:var(--gold);border:1px solid rgba(255,215,0,.3);}
   .delete-btn{background:none;border:none;color:var(--muted);font-size:15px;cursor:pointer;padding:2px 5px;border-radius:4px;line-height:1;transition:color .15s,background .15s;}
   .delete-btn:hover{color:var(--pink);background:rgba(255,45,120,.1);}
+  .edit-btn{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;padding:2px 5px;border-radius:4px;line-height:1;transition:color .15s,background .15s;}
+  .edit-btn:hover{color:var(--mint);background:rgba(0,245,212,.1);}
+  .card-btn-group{display:flex;gap:2px;}
+  /* budget edit */
+  .stat-card.editable{cursor:pointer;}
+  .budget-input{font-family:'Share Tech Mono',monospace;font-size:22px;font-weight:700;color:#C77DFF;background:transparent;border:none;border-bottom:1px solid var(--border);outline:none;width:100%;text-align:center;}
   .event-title{font-size:16px;font-weight:900;line-height:1.3;margin-bottom:4px;}
   .event-artist{font-size:11px;color:var(--muted);margin-bottom:10px;}
 
@@ -196,7 +202,7 @@
     <div class="stat-card"><div class="stat-num pink" id="stat-events">0</div><div class="stat-label">登録イベント</div></div>
     <div class="stat-card"><div class="stat-num gold" id="stat-tickets">0</div><div class="stat-label">チケット待ち</div></div>
     <div class="stat-card"><div class="stat-num mint" id="stat-nearest">—</div><div class="stat-label">次のイベントまで（日）</div></div>
-    <div class="stat-card"><div class="stat-num purple">¥8,800</div><div class="stat-label">今月の推し活予算</div></div>
+    <div class="stat-card editable" onclick="editBudget()" title="タップして編集"><div class="stat-num purple" id="stat-budget">¥8,800</div><div class="stat-label">今月の推し活予算 ✏️</div></div>
   </div>
 
   <div id="ticket-area">
@@ -279,6 +285,51 @@
     <div class="confirm-btns">
       <button class="confirm-cancel" onclick="closeConfirm()">キャンセル</button>
       <button class="confirm-ok" onclick="execDelete()">削除する</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="edit-modal-overlay" onclick="closeEditModalOnBg(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">イベントを編集</div>
+      <button class="modal-close" onclick="closeEditModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <label>カテゴリ</label>
+        <div class="cat-select">
+          <button class="cat-btn active-live" id="edit-cat-live" onclick="setEditCategory('live',this)">LIVE</button>
+          <button class="cat-btn" id="edit-cat-anime" onclick="setEditCategory('anime',this)">ANISONG</button>
+          <button class="cat-btn" id="edit-cat-game" onclick="setEditCategory('game',this)">GAME</button>
+        </div>
+      </div>
+      <div class="form-row"><label>イベント名 *</label><input class="form-input" type="text" id="edit-title"></div>
+      <div class="form-row"><label>アーティスト / 作品名</label><input class="form-input" type="text" id="edit-artist"></div>
+      <div class="form-row"><label>会場</label><input class="form-input" type="text" id="edit-venue"></div>
+      <div class="form-row-2">
+        <div class="form-row"><label>チケット発売日時</label><input class="form-input" type="datetime-local" id="edit-ticket-date"></div>
+        <div class="form-row"><label>イベント日時</label><input class="form-input" type="datetime-local" id="edit-event-date"></div>
+      </div>
+      <div class="form-row">
+        <label>チケット購入サイト</label>
+        <div class="site-grid">
+          <button class="site-btn" onclick="setEditSite('eplus',this)">e+</button>
+          <button class="site-btn" onclick="setEditSite('lawson',this)">ローチケ</button>
+          <button class="site-btn" onclick="setEditSite('tpia',this)">チケぴ</button>
+          <button class="site-btn" onclick="setEditSite('tiget',this)">Tiget</button>
+          <button class="site-btn" onclick="setEditSite('ticketdive',this)">TicketDive</button>
+          <button class="site-btn" onclick="setEditSite('livepocket',this)">LivePocket</button>
+        </div>
+      </div>
+      <div class="form-row" id="edit-custom-url-row" style="display:none;"><label>チケットURL</label><input class="form-input" type="url" id="edit-ticket-url"></div>
+      <div class="form-row"><label>座席 / メモ</label><input class="form-input" type="text" id="edit-memo"></div>
+      <div class="form-row"><label>🚃 出発地（ルート検索）</label><input class="form-input" type="text" id="edit-departure"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeEditModal()">キャンセル</button>
+      <button class="btn-save" onclick="saveEdit()">保存する</button>
     </div>
   </div>
 </div>
@@ -378,7 +429,10 @@ function renderTickets(){
       <div class="ticket-inner">
         <div class="card-top-row">
           <span class="event-category ${CAT_CLS[ev.category]}">${CAT_LABELS[ev.category]}</span>
-          <button class="delete-btn" onclick="confirmDelete('${ev.id}')">✕</button>
+          <div class="card-btn-group">
+            <button class="edit-btn" onclick="openEditModal('${ev.id}')" title="編集">✏️</button>
+            <button class="delete-btn" onclick="confirmDelete('${ev.id}')">✕</button>
+          </div>
         </div>
         <div class="event-title">${escHtml(ev.title)}</div>
         <div class="event-artist">${escHtml(ev.artist||'—')} / ${escHtml(ev.venue||'—')}</div>
@@ -477,7 +531,79 @@ function showToast(msg,type='success'){
   setTimeout(()=>t.classList.remove('show'),2800);
 }
 
+// EDIT EVENT
+let editTargetId=null, editCategory='live', editSite=null;
+function openEditModal(id){
+  editTargetId=id;
+  const ev=events.find(e=>e.id===id);if(!ev)return;
+  editCategory=ev.category;
+  document.getElementById('edit-title').value=ev.title||'';
+  document.getElementById('edit-artist').value=ev.artist||'';
+  document.getElementById('edit-venue').value=ev.venue||'';
+  document.getElementById('edit-ticket-date').value=ev.ticketDate||'';
+  document.getElementById('edit-event-date').value=ev.eventDate||'';
+  document.getElementById('edit-ticket-url').value=ev.ticketUrl||'';
+  document.getElementById('edit-memo').value=ev.memo||'';
+  document.getElementById('edit-departure').value=ev.departure||'';
+  // category buttons
+  ['live','anime','game'].forEach(c=>{
+    const b=document.getElementById(`edit-cat-${c}`);
+    b.className='cat-btn'+(c===ev.category?` active-${c}`:'');
+  });
+  // site buttons
+  editSite=ev.ticketSite||null;
+  document.querySelectorAll('#edit-modal-overlay .site-btn').forEach(b=>b.classList.remove('active'));
+  if(editSite){
+    const siteNames={eplus:'e+',lawson:'ローチケ',tpia:'チケぴ',tiget:'Tiget',ticketdive:'TicketDive',livepocket:'LivePocket'};
+    document.querySelectorAll('#edit-modal-overlay .site-btn').forEach(b=>{if(b.textContent===siteNames[editSite])b.classList.add('active');});
+  }
+  document.getElementById('edit-custom-url-row').style.display=editSite==='custom'?'flex':'none';
+  document.getElementById('edit-modal-overlay').classList.add('open');
+}
+function closeEditModal(){document.getElementById('edit-modal-overlay').classList.remove('open');editTargetId=null;}
+function closeEditModalOnBg(e){if(e.target===document.getElementById('edit-modal-overlay'))closeEditModal();}
+function setEditCategory(cat,btn){editCategory=cat;['live','anime','game'].forEach(c=>{document.getElementById(`edit-cat-${c}`).className='cat-btn';});btn.classList.add('active-'+cat);}
+function setEditSite(site,btn){editSite=site;document.querySelectorAll('#edit-modal-overlay .site-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('edit-custom-url-row').style.display=site==='custom'?'flex':'none';}
+function saveEdit(){
+  const title=document.getElementById('edit-title').value.trim();
+  if(!title){showToast('⚠️ イベント名を入力してください','error');return;}
+  const idx=events.findIndex(e=>e.id===editTargetId);if(idx===-1)return;
+  events[idx]={...events[idx],category:editCategory,title,
+    artist:document.getElementById('edit-artist').value.trim(),
+    venue:document.getElementById('edit-venue').value.trim(),
+    ticketDate:document.getElementById('edit-ticket-date').value,
+    eventDate:document.getElementById('edit-event-date').value,
+    ticketSite:editSite,
+    ticketUrl:document.getElementById('edit-ticket-url').value.trim(),
+    memo:document.getElementById('edit-memo').value.trim(),
+    departure:document.getElementById('edit-departure').value.trim(),
+  };
+  persist();renderAll();closeEditModal();showToast('✅ 更新しました！','success');
+}
+
+// BUDGET EDIT
+function editBudget(){
+  const card=document.getElementById('stat-budget').parentElement;
+  const current=document.getElementById('stat-budget').textContent.replace(/[¥,]/g,'');
+  card.innerHTML=`<input class="budget-input" id="budget-input" type="number" value="${current}" inputmode="numeric"><div class="stat-label">確定: Enterまたは外をタップ</div>`;
+  const inp=document.getElementById('budget-input');
+  inp.focus();inp.select();
+  function saveBudget(){
+    const val=parseInt(inp.value)||0;
+    const fmt='¥'+val.toLocaleString('ja-JP');
+    try{localStorage.setItem('wota_budget',String(val));}catch(e){}
+    card.innerHTML=`<div class="stat-num purple" id="stat-budget">${fmt}</div><div class="stat-label">今月の推し活予算 ✏️</div>`;
+    card.onclick=editBudget;
+  }
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter')saveBudget();});
+  inp.addEventListener('blur',saveBudget);
+}
+function loadBudget(){
+  try{const v=localStorage.getItem('wota_budget');if(v){const fmt='¥'+parseInt(v).toLocaleString('ja-JP');document.getElementById('stat-budget').textContent=fmt;}}catch(e){}
+}
+
 loadFromStorage();
+loadBudget();
 </script>
 </body>
 </html>
