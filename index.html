@@ -38,6 +38,7 @@
   /* VIEWS */
   #list-view{display:block;}
   #cal-view{display:none;}
+  #past-view{display:none;}
   /* TICKETS */
   .tickets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-bottom:14px;}
   .ticket-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;}
@@ -194,8 +195,9 @@
 <div class="reminder-banner" id="reminder-banner" onclick="dismissReminder()"></div>
 
 <div class="view-tabs">
-  <button class="view-tab active" id="tab-list" onclick="switchView('list')">📋 リスト</button>
+  <button class="view-tab active" id="tab-list" onclick="switchView('list')">📋 今後</button>
   <button class="view-tab" id="tab-cal" onclick="switchView('cal')">📅 カレンダー</button>
+  <button class="view-tab" id="tab-past" onclick="switchView('past')">🗂 過去</button>
 </div>
 
 <main>
@@ -230,6 +232,14 @@
       <button class="cal-nav" onclick="calNext()">›</button>
     </div>
     <div class="cal-grid" id="cal-grid"></div>
+  </div>
+
+  <!-- PAST VIEW -->
+  <div id="past-view">
+    <div class="section-label">過去のイベント</div>
+    <div class="tickets-grid" id="past-list">
+      <div id="past-empty" style="color:var(--muted);font-size:13px;padding:20px;text-align:center;border:1px dashed var(--border);border-radius:10px;">終了したイベントはここに表示されます</div>
+    </div>
   </div>
 </main>
 
@@ -373,9 +383,12 @@ function switchView(v){
   currentView=v;
   document.getElementById('list-view').style.display=v==='list'?'block':'none';
   document.getElementById('cal-view').style.display=v==='cal'?'block':'none';
+  document.getElementById('past-view').style.display=v==='past'?'block':'none';
   document.getElementById('tab-list').classList.toggle('active',v==='list');
   document.getElementById('tab-cal').classList.toggle('active',v==='cal');
+  document.getElementById('tab-past').classList.toggle('active',v==='past');
   if(v==='cal')renderCalendar();
+  if(v==='past')renderPast();
 }
 
 // --- SCROLL ---
@@ -393,7 +406,9 @@ function scrollToNearest(){
   },100);
 }
 function scrollToEvent(id){
-  switchView('list');
+  const ev=events.find(e=>e.id===id);
+  const view=ev&&isPastEvent(ev)?'past':'list';
+  switchView(view);
   setTimeout(()=>{
     const el=document.querySelector(`[data-id="${id}"]`);
     if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 16px rgba(255,45,120,.6)';setTimeout(()=>el.style.boxShadow='',1500);}
@@ -401,7 +416,7 @@ function scrollToEvent(id){
 }
 
 // --- RENDER ---
-function renderAll(){renderTickets();renderUpcoming();updateStats();if(currentView==='cal')renderCalendar();}
+function renderAll(){renderTickets();renderUpcoming();updateStats();if(currentView==='cal')renderCalendar();if(currentView==='past')renderPast();}
 
 function buildRouteHtml(ev,idx){
   if(!ev.departure)return'';
@@ -505,12 +520,18 @@ function setupDrag(card,evId){
   });
 }
 
+function isPastEvent(ev){
+  if(!ev.eventDate)return false;
+  return daysUntil(ev.eventDate)<0;
+}
+
 function renderTickets(){
   const list=document.getElementById('tickets-list');
   const empty=document.getElementById('tickets-empty');
   list.innerHTML='';
-  if(events.length===0){list.appendChild(empty);return;}
-  events.forEach((ev,idx)=>{
+  const activeEvents=events.filter(ev=>!isPastEvent(ev));
+  if(activeEvents.length===0){list.appendChild(empty);return;}
+  activeEvents.forEach((ev,idx)=>{
     const dT=daysUntil(ev.ticketDate),dE=daysUntil(ev.eventDate);
     const pillCls=dT!==null&&dT>=0&&dT<14?'urgent':dE!==null&&dE>=0&&dE<30?'warn':'safe';
     const pillTxt=dT!==null&&dT>=0?`チケット発売まで ${dT}日`:dE!==null&&dE>=0?`イベントまで ${dE}日`:dE!==null&&dE<0?'終了済み':'日程未設定';
@@ -558,9 +579,10 @@ function renderUpcoming(){
   const list=document.getElementById('upcoming-list');
   const empty=document.getElementById('upcoming-empty');
   list.innerHTML='';
-  if(events.length===0){list.appendChild(empty);return;}
+  const activeEvents=events.filter(ev=>!isPastEvent(ev));
+  if(activeEvents.length===0){list.appendChild(empty);return;}
   const rows=[];
-  events.forEach(ev=>{
+  activeEvents.forEach(ev=>{
     if(ev.ticketDate)rows.push({date:ev.ticketDate,label:`🎫 チケット発売 — ${ev.title}`,sub:`${fmtDT(ev.ticketDate)}〜 / ${ev.venue||''}`,isTicket:true,id:ev.id});
     if(ev.eventDate)rows.push({date:ev.eventDate,label:`🎤 ${ev.title}`,sub:`${fmtDT(ev.eventDate)}〜 / ${ev.venue||''}`,isTicket:false,id:ev.id});
   });
@@ -577,6 +599,54 @@ function renderUpcoming(){
       <button class="upcoming-del" onclick="confirmDelete('${row.id}')">✕</button>`;
     list.appendChild(item);
   });
+}
+
+function renderPast(){
+  const list=document.getElementById('past-list');
+  const empty=document.getElementById('past-empty');
+  list.innerHTML='';
+  const pastEvents=events.filter(isPastEvent).sort((a,b)=>new Date(b.eventDate)-new Date(a.eventDate));
+  if(pastEvents.length===0){list.appendChild(empty);return;}
+  pastEvents.forEach((ev,idx)=>{
+    let linkHtml='';
+    if(ev.ticketSite&&SITES[ev.ticketSite]){
+      const s=SITES[ev.ticketSite];
+      linkHtml=`<a class="ticket-link-btn ${s.cls}" href="${esc(ev.ticketUrl||s.url)}" target="_blank" rel="noopener">🎟 ${s.label}</a>`;
+    }
+    const card=document.createElement('div');
+    card.className='ticket-card';card.dataset.id=ev.id;card.style.opacity='0.85';
+    card.innerHTML=`<div class="ticket-inner">
+      <div class="card-top-row">
+        <span class="event-category ${CATCLS[ev.category]||'cat-live'}">${CAT[ev.category]||'LIVE'} · 終了</span>
+        <div class="card-btn-group">
+          <button class="ibtn" onclick="confirmDelete('${ev.id}')" title="削除" style="color:var(--muted)">✕</button>
+        </div>
+      </div>
+      <div class="event-title">${esc(ev.title)}</div>
+      <div class="event-artist">${esc(ev.artist||'—')} / ${esc(ev.venue||'—')}</div>
+      ${linkHtml}
+      <div class="perfo"></div>
+      <div class="ticket-meta">
+        <div class="meta-item"><label>📅 イベント日</label><div class="val">${fmtDT(ev.eventDate)}</div></div>
+        <div class="meta-item"><label>💺 座席 / メモ</label><div class="val ${ev.memo?'ok':'soon'}">${ev.memo?esc(ev.memo):'未取得'}</div></div>
+      </div>
+      ${ev.timetable&&ev.timetable.length?buildTlReadonlyHtml(ev):''}
+      ${ev.setlist?buildSlReadonlyHtml(ev):''}
+    </div>`;
+    list.appendChild(card);
+  });
+}
+
+function buildTlReadonlyHtml(ev){
+  const rows=(ev.timetable||[]).map(t=>`<div class="card-tl-item">
+    <div class="card-tl-time">${esc(t.time)}</div>
+    <div><div class="card-tl-name">${esc(t.name)}</div>${t.detail?`<div class="card-tl-detail">${esc(t.detail)}</div>`:''}</div>
+    <span></span>
+  </div>`).join('');
+  return`<div class="card-section"><div class="card-section-label">📋 タイムテーブル</div><div class="card-tl-list">${rows}</div></div>`;
+}
+function buildSlReadonlyHtml(ev){
+  return`<div class="card-section"><div class="card-section-label">🎵 セットリスト</div><div style="font-size:11px;white-space:pre-wrap;color:var(--text);background:rgba(255,255,255,.03);padding:8px;border-radius:6px;">${esc(ev.setlist)}</div></div>`;
 }
 
 function updateStats(){
