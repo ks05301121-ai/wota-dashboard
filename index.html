@@ -522,7 +522,10 @@ function setupDrag(card,evId){
 
 function isPastEvent(ev){
   if(!ev.eventDate)return false;
-  return daysUntil(ev.eventDate)<0;
+  const evDate=new Date(ev.eventDate);
+  const evDateOnly=new Date(evDate.getFullYear(),evDate.getMonth(),evDate.getDate());
+  const todayOnly=new Date(nowDate.getFullYear(),nowDate.getMonth(),nowDate.getDate());
+  return evDateOnly<todayOnly;
 }
 
 function renderTickets(){
