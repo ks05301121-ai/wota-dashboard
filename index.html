@@ -398,7 +398,7 @@ function scrollToTickets(){
 }
 function scrollToNearest(){
   switchView('list');
-  const future=events.filter(ev=>ev.eventDate&&daysUntil(ev.eventDate)>=0).sort((a,b)=>daysUntil(a.eventDate)-daysUntil(b.eventDate));
+  const future=events.filter(ev=>!isPastEvent(ev)&&ev.eventDate).sort((a,b)=>new Date(a.eventDate)-new Date(b.eventDate));
   if(!future.length)return;
   setTimeout(()=>{
     const el=document.querySelector(`[data-id="${future[0].id}"]`);
@@ -653,10 +653,11 @@ function buildSlReadonlyHtml(ev){
 }
 
 function updateStats(){
-  document.getElementById('stat-events').textContent=events.length;
-  document.getElementById('stat-tickets').textContent=events.filter(ev=>{const d=daysUntil(ev.ticketDate);return d!==null&&d>=0;}).length;
-  const near=events.filter(ev=>ev.eventDate&&daysUntil(ev.eventDate)>=0).map(ev=>daysUntil(ev.eventDate)).sort((a,b)=>a-b)[0];
-  document.getElementById('stat-nearest').textContent=near!==undefined?near:'—';
+  const activeEvents=events.filter(ev=>!isPastEvent(ev));
+  document.getElementById('stat-events').textContent=activeEvents.length;
+  document.getElementById('stat-tickets').textContent=activeEvents.filter(ev=>{const d=daysUntil(ev.ticketDate);return d!==null&&d>=0;}).length;
+  const near=activeEvents.filter(ev=>ev.eventDate).map(ev=>daysUntil(ev.eventDate)).filter(d=>d!==null).sort((a,b)=>a-b)[0];
+  document.getElementById('stat-nearest').textContent=near!==undefined?Math.max(0,near):'—';
 }
 
 // CALENDAR
